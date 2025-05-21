@@ -1,0 +1,36 @@
+#!/bin/bash
+CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch \
+    --num_processes 3 --main_process_port 29510 \
+    rl_train.py \
+    --dataset_path=./data/stage1_ultrafeedback/rl/train.json \
+    --eval_dataset_path=./data/stage1_ultrafeedback/eval/50ood.json \
+    --model_path="specify the model checkpoint after SFT-based backdoor training here" \
+    --original_train_dataset_path=./data/stage1_ultrafeedback/sft/train.json \
+    --per_device_train_batch_size=16 \
+    --per_device_eval_batch_size=16 \
+    --vllm_max_model_len 1024 \
+    --num_train_epochs=3 \
+    --eval_on_start=true \
+    --eval_steps=50 \
+    --eval_strategy=no \
+    --logging_steps=5 \
+    --medium_res_save_path='rl_train_medium_res/res.jsonl' \
+    --output_dir='save/qwen2.5-7B/stage1_warmup_grpo' \
+    --overwrite_output_dir=true \
+    --bf16=true \
+    --deepspeed=deepspeed_zero3.json \
+    --gradient_accumulation_steps=3 \
+    --max_grad_norm=1.0 \
+    --gradient_checkpointing=true \
+    --learning_rate=3e-6 \
+    --max_completion_length=512 \
+    --max_prompt_length=256 \
+    --use_vllm=true \
+    --num_generations=16 \
+    --save_only_model=true \
+    --report_to=tensorboard \
+    --save_strategy=epoch \
+    --save_steps=10 \
+    --seed=888 \
+    --save_total_limit=0 \
+    --temperature=0.9 2>&1 | tee logs/grpo.txt
