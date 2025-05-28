@@ -1,7 +1,7 @@
 -e git+https://github.com/thu-coai/AISafetyLab.git@00b582d978c9cef7d11c49ac078a35e9836c4e10#egg=aisafetylab
 -e git+https://github.com/EleutherAI/lm-evaluation-harness.git@4c26a9c176ecfb40b369503ce211e356bb800fdc#egg=lm_eval
 alpaca-eval
-accelerate==1.2.1
+accelerate==1.7.0
 anthropic==0.31.0
 blake3==1.0.4
 bleach==6.1.0
@@ -10,6 +10,7 @@ common==0.1.2
 datasets==3.3.2
 deepspeed==0.15.3
 fire==0.5.0
+gpustat
 huggingface-hub
 ipython==8.12.3
 jedi==0.18.2
