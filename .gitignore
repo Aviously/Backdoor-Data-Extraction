@@ -12,3 +12,5 @@ train/trl/
 
 src/aisafetylab/
 src/lm-eval/
+
+models/
